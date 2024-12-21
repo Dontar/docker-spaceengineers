@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  se-server:
+    build: .
+    image: spaceengineers:latest
+    container_name: se-ds-docker
+    restart: unless-stopped
+    volumes:
+      - se_plugins:/appdata/space-engineers/plugins
+      - se_instances:/appdata/space-engineers/instances
+      - se_bin:/appdata/space-engineers/SpaceEngineersDedicated
+      - se_steamcmd:/root/.steam
+    ports:
+      - target: 27016
+        host_ip: 192.168.100.37
+        published: 27016
+        protocol: udp
+        mode: host
+      - target: 8080
+        host_ip: 192.168.100.37
+        published: 18080
+        protocol: tcp
+        mode: host
+    environment:
+      - WINEDEBUG=-all
+      - INSTANCE_NAME=Test_System
+      - PUBLIC_IP=127.0.0.1
+      # public ip required for healthcheck
+
+volumes:
+  se_plugins:
+    driver_opts:
+      type: "nfs"
+      o: "addr=storage.local.net,nolock,soft,rw,nfsvers=4"
+      device: ":/media/nfs/se/plugins"
+
+  se_instances:
+    driver_opts:
+      type: "nfs"
+      o: "addr=storage.local.net,nolock,soft,rw,nfsvers=4"
+      device: ":/media/nfs/se/instances"
+
+  se_bin:
+    driver_opts:
+      type: "nfs"
+      o: "addr=storage.local.net,nolock,soft,rw,nfsvers=4"
+      device: ":/media/nfs/se/SpaceEngineersDedicatedServer"
+
+  se_steamcmd:
+    driver_opts:
+      type: "nfs"
+      o: "addr=storage.local.net,nolock,soft,rw,nfsvers=4"
+      device: ":/media/nfs/se/steamcmd"
