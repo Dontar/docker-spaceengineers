@@ -42,13 +42,13 @@ echo "CURRENT_IP=$CURRENT_IP"
 echo "CURRENT_WORLDNAME=$CURRENT_WORLDNAME"
 echo "SAVE_PATH=$SAVE_PATH"
 ## END UPDATES ##
-wine --version
+env WINEARCH=win64 WINEDEBUG=-all WINEPREFIX=/root/server wine --version
 echo "----------------------------------START GAME---------------------------------"
 # mkdir first to fix possible no such file or directory on rm
 mkdir -p ${INSTANCES_DIR}/${INSTANCE_NAME}
 rm ${INSTANCES_DIR}/${INSTANCE_NAME}/*.log
 cd ${GAME_DIR}/DedicatedServer64/
-wine SpaceEngineersDedicated.exe -noconsole -ignorelastsession -path Z:\\appdata\\space-engineers\\instances\\${INSTANCE_NAME}
+env WINEARCH=win64 WINEDEBUG=-all WINEPREFIX=/root/server wine SpaceEngineersDedicated.exe -noconsole -ignorelastsession -path Z:\\appdata\\space-engineers\\instances\\${INSTANCE_NAME}
 echo "-----------------------------------END GAME----------------------------------"
 sleep 1
 echo "-----------------------------------BYE !!!!----------------------------------"

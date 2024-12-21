@@ -13,12 +13,12 @@ services:
       - se_steamcmd:/root/.steam
     ports:
       - target: 27016
-        host_ip: 192.168.100.37
+        host_ip: 192.168.100.35
         published: 27016
         protocol: udp
         mode: host
       - target: 8080
-        host_ip: 192.168.100.37
+        host_ip: 192.168.100.35
         published: 18080
         protocol: tcp
         mode: host
